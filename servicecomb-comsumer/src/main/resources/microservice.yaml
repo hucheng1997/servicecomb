@@ -1,0 +1,24 @@
+APPLICATION_ID: hucheng #一般填公司的名称
+service_description:
+  name: servicecomb-consumer #微服务名
+  version: 0.0.1 #版本
+  environment: development #环境
+servicecomb:
+  handler:
+    chain:
+      Provider:
+        default: qps-flowcontrol-provider,bizkeeper-provider,tracing-provider #使用服务治理的处理链
+  fallbackpolicy:
+    provider:
+      policy: returnnull #容错策略
+  flowcontrol:
+    Provider:
+      qps:
+        limit:
+          gateway: 100 #限流每秒QPS次数的限制
+  rest:
+    address: 0.0.0.0:91
+  service:
+    registry:
+      address: http://127.0.0.1:30100
+      autodiscovery: false
